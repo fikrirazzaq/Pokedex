@@ -4,38 +4,28 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Type {
-    @SerializedName("url")
+
+    @SerializedName("slot")
     @Expose
-    private Integer url;
-    @SerializedName("name")
+    private int slot;
+    @SerializedName("type")
     @Expose
-    private Integer name;
+    private Type_ type;
 
-    /**
-     * @return The url
-     */
-    public Integer getUrl() {
-        return url;
+    public int getSlot() {
+        return slot;
     }
 
-    /**
-     * @param url The url
-     */
-    public void setUrl(Integer url) {
-        this.url = url;
+    public void setSlot(int slot) {
+        this.slot = slot;
     }
 
-    /**
-     * @return The name
-     */
-    public Integer getName() {
-        return name;
+    public Type_ getType() {
+        return type;
     }
 
-    /**
-     * @param name The name
-     */
-    public void setName(Integer name) {
-        this.name = name;
+    public void setType(Type_ type) {
+        this.type = type;
     }
+
 }

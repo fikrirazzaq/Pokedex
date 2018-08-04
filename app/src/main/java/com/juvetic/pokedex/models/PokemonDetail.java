@@ -3,111 +3,140 @@ package com.juvetic.pokedex.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PokemonDetail {
 
-    @SerializedName("id")
+    @SerializedName("forms")
     @Expose
-    private Integer id;
+    private List<Form> forms = null;
+    @SerializedName("abilities")
+    @Expose
+    private List<Ability> abilities = null;
+    @SerializedName("stats")
+    @Expose
+    private List<Stat> stats = null;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("weight")
     @Expose
-    private Integer weight;
+    private int weight;
     @SerializedName("height")
     @Expose
-    private Integer height;
+    private int height;
+    @SerializedName("is_default")
+    @Expose
+    private boolean isDefault;
+    @SerializedName("species")
+    @Expose
+    private Species species;
+    @SerializedName("id")
+    @Expose
+    private int id;
+    @SerializedName("order")
+    @Expose
+    private int order;
     @SerializedName("base_experience")
     @Expose
-    private Integer base_experience;
+    private int baseExperience;
     @SerializedName("types")
     @Expose
-    private List<Types> types = new ArrayList<>();
+    private List<Type_> types = null;
 
-    /**
-     * @return The id
-     */
-    public Integer getId() {
-        return id;
+    public List<Form> getForms() {
+        return forms;
     }
 
-    /**
-     * @param id The id
-     */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setForms(List<Form> forms) {
+        this.forms = forms;
     }
 
-    /**
-     * @return The name
-     */
+    public List<Ability> getAbilities() {
+        return abilities;
+    }
+
+    public void setAbilities(List<Ability> abilities) {
+        this.abilities = abilities;
+    }
+
+    public List<Stat> getStats() {
+        return stats;
+    }
+
+    public void setStats(List<Stat> stats) {
+        this.stats = stats;
+    }
+
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name The name
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return The weight
-     */
-    public Integer getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    /**
-     * @param weight The weight
-     */
-    public void setWeight(Integer weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
-    /**
-     * @return The height
-     */
-    public Integer getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    /**
-     * @param height The height
-     */
-    public void setHeight(Integer height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 
-    /**
-     * @return The base_experience
-     */
-    public Integer getBase_experience() {
-        return base_experience;
+    public boolean isIsDefault() {
+        return isDefault;
     }
 
-    /**
-     * @param base_experience The base_experience
-     */
-    public void setBase_experience(Integer base_experience) {
-        this.base_experience = base_experience;
+    public void setIsDefault(boolean isDefault) {
+        this.isDefault = isDefault;
     }
 
-    /**
-     * @return The types
-     */
-    public List<Types> getTypes() {
+    public Species getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(Species species) {
+        this.species = species;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public int getBaseExperience() {
+        return baseExperience;
+    }
+
+    public void setBaseExperience(int baseExperience) {
+        this.baseExperience = baseExperience;
+    }
+
+    public List<Type_> getTypes() {
         return types;
     }
 
-    /**
-     * @param types The types
-     */
-    public void setTypes(List<Types> types) {
+    public void setTypes(List<Type_> types) {
         this.types = types;
     }
 }
