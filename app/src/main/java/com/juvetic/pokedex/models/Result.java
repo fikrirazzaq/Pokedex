@@ -12,6 +12,10 @@ public class Result {
     @Expose
     private String name;
 
+    public Result(String name) {
+        this.name = name;
+    }
+
     /**
      * @return The url of pokemon detail
      */
