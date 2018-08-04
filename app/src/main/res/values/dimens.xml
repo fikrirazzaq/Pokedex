@@ -10,4 +10,7 @@
     <dimen name="activity_margin_quarter">4dp</dimen>
     <dimen name="activity_margin_content">24dp</dimen>
     <dimen name="activity_margin_half">8dp</dimen>
+
+    <dimen name="image_thumb_width">72dp</dimen>
+    <dimen name="image_thumb_height">96dp</dimen>
 </resources>
