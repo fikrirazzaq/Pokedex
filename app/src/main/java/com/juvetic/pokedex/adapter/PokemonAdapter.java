@@ -3,13 +3,14 @@ package com.juvetic.pokedex.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.juvetic.pokedex.R;
-import com.juvetic.pokedex.models.Pokemon;
+import com.juvetic.pokedex.models.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,22 @@ public class PokemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int ITEM = 0;
     private static final int LOADING = 1;
 
-    private List<Pokemon> pokemons;
+    private List<Result> results;
     private Context context;
 
     private boolean isLoadingAdded = false;
 
     public PokemonAdapter(Context context) {
         this.context = context;
-        pokemons = new ArrayList<>();
+        results = new ArrayList<>();
+    }
+
+    public List<Result> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
 
     @NonNull
@@ -34,6 +43,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+
         switch (viewType) {
             case ITEM:
                 viewHolder = getViewHolder(parent, inflater);
@@ -43,6 +53,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder = new LoadingVH(v2);
                 break;
         }
+
         return viewHolder;
     }
 
@@ -57,26 +68,30 @@ public class PokemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        Pokemon pokemon = pokemons.get(position);
+        Result result = results.get(position);
+        Log.d("HASILLL ", result.getName());
+
         switch (getItemViewType(position)) {
             case ITEM:
-                PokemonVH pokemonVH = (PokemonVH) holder;
-                pokemonVH.textView.setText(pokemon.getResults().get(position).getName());
+                final PokemonVH pokemonVH = (PokemonVH) holder;
+                pokemonVH.textView.setText(result.getName());
+
                 break;
             case LOADING:
 //                Do nothing
                 break;
         }
+
     }
 
     @Override
     public int getItemCount() {
-        return pokemons == null ? 0 : pokemons.size();
+        return results == null ? 0 : results.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return (position == pokemons.size() - 1 && isLoadingAdded) ? LOADING : ITEM;
+        return (position == results.size() - 1 && isLoadingAdded) ? LOADING : ITEM;
     }
 
     /*
@@ -84,21 +99,21 @@ public class PokemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
   _________________________________________________________________________________________________
    */
 
-    public void add(Pokemon pokemon) {
-        pokemons.add(pokemon);
-        notifyItemInserted(pokemons.size() - 1);
+    public void add(Result r) {
+        results.add(r);
+        notifyItemInserted(results.size() - 1);
     }
 
-    public void addAll(List<Pokemon> pokemons) {
-        for (Pokemon pokemon : pokemons) {
-            add(pokemon);
+    public void addAll(List<Result> results) {
+        for (Result result : results) {
+            add(result);
         }
     }
 
-    public void remove(Pokemon pokemon) {
-        int position = pokemons.indexOf(pokemon);
+    public void remove(Result r) {
+        int position = results.indexOf(r);
         if (position > -1) {
-            pokemons.remove(position);
+            results.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -114,23 +129,26 @@ public class PokemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return getItemCount() == 0;
     }
 
+
     public void addLoadingFooter() {
         isLoadingAdded = true;
-        add(new Pokemon());
+        add(new Result());
     }
 
     public void removeLoadingFooter() {
         isLoadingAdded = false;
-        int position = pokemons.size() - 1;
-        Pokemon item = getItem(position);
-        if (item != null) {
-            pokemons.remove(position);
+
+        int position = results.size() - 1;
+        Result result = getItem(position);
+
+        if (result != null) {
+            results.remove(position);
             notifyItemRemoved(position);
         }
     }
 
-    public Pokemon getItem(int position) {
-        return pokemons.get(position);
+    public Result getItem(int position) {
+        return results.get(position);
     }
 
     /*

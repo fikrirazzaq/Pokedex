@@ -11,12 +11,17 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.juvetic.pokedex.adapter.PokemonAdapter;
+import com.juvetic.pokedex.api.PokemonApi;
+import com.juvetic.pokedex.api.PokemonService;
 import com.juvetic.pokedex.models.Pokemon;
 import com.juvetic.pokedex.models.Result;
 import com.juvetic.pokedex.util.PaginationScrollListener;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,17 +36,19 @@ public class MainActivity extends AppCompatActivity {
     private int TOTAL_PAGES = 3;
     private int currentPage = PAGE_START;
 
+    private PokemonService pokemonService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        rv = findViewById(R.id.main_recycler);
         progressBar = findViewById(R.id.main_progress);
 
         adapter = new PokemonAdapter(this);
 
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rv = findViewById(R.id.main_recycler);
         rv.setLayoutManager(linearLayoutManager);
 
         rv.setItemAnimator(new DefaultItemAnimator());
@@ -53,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             protected void loadMoreItems() {
                 isLoading = true;
                 currentPage += 1;
+
                 // mocking network delay for API call
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -78,60 +86,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // mocking network delay for API call
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadFirstPage();
-            }
-        }, 1000);
+        //init service and load data
+        pokemonService = PokemonApi.getClient(this).create(PokemonService.class);
 
+        loadFirstPage();
     }
 
     private void loadFirstPage() {
         Log.d(TAG, "loadFirstPage: ");
 
-        List<Result> results = new ArrayList<>();
-        int itemCount = adapter.getItemCount();
-        for (int i = 0; i < 20; i++) {
-            Result resultPokemon = new Result("Pokemon " + (itemCount == 0 ? (itemCount + 1 + i) : (itemCount + i)));
-            results.add(resultPokemon);
-        }
+        Call<Pokemon> call = pokemonService.getPokemon(20, 0);
+        call.enqueue(new Callback<Pokemon>() {
+            @Override
+            public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+                Log.d("AKSDJKLASJDKLJDKLA", " KLASJDLJLASD");
+                Log.d(TAG, "loadFirstPage: onResponse: " + response.body().toString());
 
-        List<Pokemon> pokemons = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Pokemon pokemon = new Pokemon(results);
-            pokemons.add(pokemon);
-        }
+                List<Result> results = response.body().getResults();
+                progressBar.setVisibility(View.GONE);
+                adapter.addAll(results);
 
-        progressBar.setVisibility(View.GONE);
-        adapter.addAll(pokemons);
+                if (currentPage <= TOTAL_PAGES) adapter.addLoadingFooter();
+                else isLastPage = true;
 
-        if (currentPage <= TOTAL_PAGES) adapter.addLoadingFooter();
-        else isLastPage = true;
+//                for (Result r : adapter.getResults()) {
+//                    Log.d("Pokemon ", r.getName() + " " + r.getUrl());
+//                }
+            }
+
+            @Override
+            public void onFailure(Call<Pokemon> call, Throwable t) {
+                Log.e("ATEP ", "ASDKJALKSDJKLASD");
+                t.printStackTrace(); // for now
+            }
+        });
+
     }
 
     private void loadNextPage() {
         Log.d(TAG, "loadNextPage: " + currentPage);
 
-        List<Result> results = new ArrayList<>();
-        int itemCount = adapter.getItemCount();
-        Log.d("ITEM CONT ", itemCount + "");
-        for (int i = 0; i < 20; i++) {
-            Result resultPokemon = new Result("Pokemon " + (itemCount == 0 ? (itemCount + 1 + i) : (itemCount + i)));
-            results.add(resultPokemon);
-        }
-
-        List<Pokemon> pokemons = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Pokemon pokemon = new Pokemon(results);
-            pokemons.add(pokemon);
-        }
-
         adapter.removeLoadingFooter();
-
         isLoading = false;
-        adapter.addAll(pokemons);
 
         if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
         else isLastPage = true;
