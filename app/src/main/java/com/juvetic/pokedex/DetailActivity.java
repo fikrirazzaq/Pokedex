@@ -77,11 +77,6 @@ public class DetailActivity extends AppCompatActivity {
         ImageView pokemonImage = findViewById(R.id.pokemon_image);
         final ProgressBar progressBar = findViewById(R.id.pokemon_progress);
 
-        /**
-         * Using Glide to handle image loading.
-         * Learn more about Glide here:
-         * <a href="http://blog.grafixartist.com/image-gallery-app-android-studio-1-4-glide/" />
-         */
         Glide
                 .with(this)
                 .load(url)

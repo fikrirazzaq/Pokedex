@@ -14,4 +14,9 @@
     <string name="pokemon_height">%d Inches</string>
     <string name="pokemon_weight">%d t</string>
     <string name="pokemon_exp">%dexp</string>
+    <string name="for_your_information">For your information:</string>
+    <string name="singapore_indonesia_thailand_and_china_have_been_banned">Singapore, Indonesia, Thailand and China have been banned..</string>
+    <string name="this_is_due_to_severely_high_traffic_breaking_the_website_11_million_requests_per_day_vs_2_million_for_the_rest_of_the_world">This is due to severely high traffic breaking the website (11 million requests per day, vs 2 million for the rest of the world).</string>
+    <string name="nalternative_solution_nuse_vpn_connection_from_other_country">Alternative Solution: Use VPN Connection from other country.</string>
+    <string name="tap_to_reload">Tap to reload</string>
 </resources>

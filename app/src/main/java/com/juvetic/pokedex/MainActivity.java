@@ -155,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements PaginationAdapter
     }
 
     private void loadNextPage() {
-        Log.d(TAG, "loadNextPage: " + currentOffset);
 
         callPokemon().enqueue(new Callback<Pokemon>() {
             @Override
@@ -197,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements PaginationAdapter
     }
 
     /**
-     * Performs a Retrofit call to the top rated movies API.
+     * Performs a Retrofit call to pokemon API.
      * Same API call for Pagination.
      * As {@link #currentOffset} will be incremented automatically
      * by @{@link PaginationScrollListener} to load next page.

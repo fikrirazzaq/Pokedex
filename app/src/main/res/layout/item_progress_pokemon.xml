@@ -58,7 +58,7 @@
                 style="@style/Base.TextAppearance.AppCompat.Caption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tap to reload" />
+                android:text="@string/tap_to_reload" />
 
         </LinearLayout>
 
