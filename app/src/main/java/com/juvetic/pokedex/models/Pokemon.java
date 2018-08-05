@@ -21,13 +21,6 @@ public class Pokemon {
     @Expose
     private String next;
 
-    public Pokemon() {
-    }
-
-    public Pokemon(List<Result> results) {
-        this.results = results;
-    }
-
     /**
      * @return The count of pokemon
      */

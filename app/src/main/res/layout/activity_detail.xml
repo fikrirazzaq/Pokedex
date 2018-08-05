@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        android:layout_marginTop="@dimen/activity_margin"
         android:background="@android:color/white"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_margin"
@@ -25,10 +25,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0.38"
-            android:gravity="end"
+            android:gravity="start"
             android:maxLines="1"
             android:textStyle="bold"
             tools:text="Pokemon ID | #1" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/activity_margin_half"
+            app:cardBackgroundColor="@color/placeholder_grey"
+            app:cardCornerRadius="3dp"
+            app:cardPreventCornerOverlap="false">
+
+            <ProgressBar
+                android:id="@+id/pokemon_progress"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="@dimen/activity_margin"
+                android:layout_height="@dimen/activity_margin"
+                android:layout_gravity="center"
+                android:theme="@style/CircularProgress" />
+
+            <ImageView
+                android:id="@+id/pokemon_image"
+                android:layout_width="@dimen/image_thumb_widthXL"
+                android:layout_height="@dimen/image_thumb_heightXL" />
+
+        </android.support.v7.widget.CardView>
 
         <TextView
             android:id="@+id/text_pokemon_name"
@@ -49,34 +73,32 @@
             android:gravity="center"
             tools:text="Lightning, Fire" />
 
-        <TextView
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_margin_half"
-            android:text="stats"
-            android:textAllCaps="true" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/activity_margin"
+            android:layout_marginRight="@dimen/activity_margin"
             android:layout_marginTop="@dimen/activity_margin_half"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="4">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_margin_half"
                 android:layout_marginRight="@dimen/activity_margin_half"
-                android:src="@mipmap/ic_launcher" />
+                android:text="Weight" />
 
             <TextView
                 android:id="@+id/text_pokemon_weight"
-                style="@style/TextAppearance.AppCompat.Caption"
+                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                tools:text="322" />
+                android:textStyle="bold"
+                tools:text="322 t" />
 
         </LinearLayout>
 
@@ -84,22 +106,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/activity_margin"
+            android:layout_marginRight="@dimen/activity_margin"
             android:layout_marginTop="@dimen/activity_margin_half"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_margin_half"
                 android:layout_marginRight="@dimen/activity_margin_half"
-                android:src="@mipmap/ic_launcher" />
+                android:text="Height" />
 
             <TextView
                 android:id="@+id/text_pokemon_height"
-                style="@style/TextAppearance.AppCompat.Caption"
-                android:layout_width="match_parent"
+                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                tools:text="25" />
+                android:textStyle="bold"
+                tools:text="25 Inches" />
 
         </LinearLayout>
 
@@ -107,22 +134,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/activity_margin"
+            android:layout_marginRight="@dimen/activity_margin"
             android:layout_marginTop="@dimen/activity_margin_half"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_margin_half"
                 android:layout_marginRight="@dimen/activity_margin_half"
-                android:src="@mipmap/ic_launcher" />
+                android:text="Exp" />
 
             <TextView
                 android:id="@+id/text_pokemon_base_experience"
-                style="@style/TextAppearance.AppCompat.Caption"
-                android:layout_width="match_parent"
+                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                tools:text="845" />
+                android:textStyle="bold"
+                tools:text="845 exp" />
 
         </LinearLayout>
 

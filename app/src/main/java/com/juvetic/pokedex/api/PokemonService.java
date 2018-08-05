@@ -16,9 +16,9 @@ public interface PokemonService {
             @Query("offset") int offset
     );
 
-    @GET("pokemon/{id}")
+    @GET("pokemon/{id}/")
     Call<PokemonDetail> getPokemonDetail(
-            @Path("id") String id
+            @Path("id") int id
     );
 
 }

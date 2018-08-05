@@ -42,7 +42,7 @@ public class PokemonDetail {
     private int baseExperience;
     @SerializedName("types")
     @Expose
-    private List<Type_> types = null;
+    private List<Type> types = null;
 
     public List<Form> getForms() {
         return forms;
@@ -132,11 +132,11 @@ public class PokemonDetail {
         this.baseExperience = baseExperience;
     }
 
-    public List<Type_> getTypes() {
+    public List<Type> getTypes() {
         return types;
     }
 
-    public void setTypes(List<Type_> types) {
+    public void setTypes(List<Type> types) {
         this.types = types;
     }
 }

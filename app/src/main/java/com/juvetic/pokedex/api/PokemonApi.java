@@ -1,7 +1,7 @@
 package com.juvetic.pokedex.api;
 
-import android.content.Context;
-
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -9,9 +9,17 @@ public class PokemonApi {
 
     private static Retrofit retrofit = null;
 
-    public static Retrofit getClient(Context context) {
+    private static OkHttpClient buildClient() {
+        return new OkHttpClient
+                .Builder()
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .build();
+    }
+
+    public static Retrofit getClient() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
+                    .client(buildClient())
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl("https://pokeapi.co/api/v2/")
                     .build();
