@@ -26,15 +26,16 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private static final int PAGE_START = 0;
+    private static final int LIMIT = 20;
+    private static final int OFFSET_START = 0;
     PokemonAdapter adapter;
     LinearLayoutManager linearLayoutManager;
     RecyclerView rv;
     ProgressBar progressBar;
     private boolean isLoading = false;
     private boolean isLastPage = false;
-    private int TOTAL_PAGES = 3;
-    private int currentPage = PAGE_START;
+    private int TOTAL_OFFSET = 940;
+    private int currentOffset = OFFSET_START;
 
     private PokemonService pokemonService;
 
@@ -59,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void loadMoreItems() {
                 isLoading = true;
-                currentPage += 1;
-
-                // mocking network delay for API call
+                currentOffset += 20;
+                Log.v("OFFSET NAMBAH WA ", "" + currentOffset);
+//                 mocking network delay for API call
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -71,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public int getTotalPageCount() {
-                return TOTAL_PAGES;
+            public int getTotalOffsetCount() {
+                return TOTAL_OFFSET;
             }
 
             @Override
@@ -95,23 +96,19 @@ public class MainActivity extends AppCompatActivity {
     private void loadFirstPage() {
         Log.d(TAG, "loadFirstPage: ");
 
-        Call<Pokemon> call = pokemonService.getPokemon(20, 0);
+        Call<Pokemon> call = pokemonService.getPokemon(LIMIT, currentOffset);
         call.enqueue(new Callback<Pokemon>() {
             @Override
             public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
                 Log.d("AKSDJKLASJDKLJDKLA", " KLASJDLJLASD");
-                Log.d(TAG, "loadFirstPage: onResponse: " + response.body().toString());
 
                 List<Result> results = response.body().getResults();
+
                 progressBar.setVisibility(View.GONE);
                 adapter.addAll(results);
 
-                if (currentPage <= TOTAL_PAGES) adapter.addLoadingFooter();
+                if (currentOffset <= TOTAL_OFFSET) adapter.addLoadingFooter();
                 else isLastPage = true;
-
-//                for (Result r : adapter.getResults()) {
-//                    Log.d("Pokemon ", r.getName() + " " + r.getUrl());
-//                }
             }
 
             @Override
@@ -124,12 +121,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadNextPage() {
-        Log.d(TAG, "loadNextPage: " + currentPage);
+        Log.d(TAG, "loadNextPage: " + currentOffset);
 
+        Call<Pokemon> call = pokemonService.getPokemon(LIMIT, currentOffset);
+        call.enqueue(new Callback<Pokemon>() {
+            @Override
+            public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+                Log.d("APETTTTTTT", " KLASJDLJLASD");
+
+                List<Result> results = response.body().getResults();
+                progressBar.setVisibility(View.GONE);
+                adapter.addAll(results);
+
+                if (currentOffset <= TOTAL_OFFSET) adapter.addLoadingFooter();
+                else isLastPage = true;
+            }
+
+            @Override
+            public void onFailure(Call<Pokemon> call, Throwable t) {
+                Log.e("ATEASDasdasdP ", "ASDKJALKSDJKLASD");
+                t.printStackTrace(); // for now
+            }
+        });
         adapter.removeLoadingFooter();
         isLoading = false;
 
-        if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
+        if (currentOffset != TOTAL_OFFSET) adapter.addLoadingFooter();
         else isLastPage = true;
     }
 

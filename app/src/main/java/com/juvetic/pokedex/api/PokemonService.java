@@ -1,6 +1,7 @@
 package com.juvetic.pokedex.api;
 
 import com.juvetic.pokedex.models.Pokemon;
+import com.juvetic.pokedex.models.PokemonDetail;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -16,8 +17,8 @@ public interface PokemonService {
     );
 
     @GET("pokemon/{id}")
-    Call<Pokemon> getResult(
-            @Path("id") int id
+    Call<PokemonDetail> getPokemonDetail(
+            @Path("id") String id
     );
 
 }

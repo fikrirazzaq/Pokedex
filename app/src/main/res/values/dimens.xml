@@ -12,5 +12,6 @@
     <dimen name="activity_margin_half">8dp</dimen>
 
     <dimen name="image_thumb_width">72dp</dimen>
-    <dimen name="image_thumb_height">96dp</dimen>
+    <dimen name="image_thumb_height">72dp</dimen>
+    <dimen name="image_thumb_heightX">84dp</dimen>
 </resources>

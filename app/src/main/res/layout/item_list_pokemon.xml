@@ -40,7 +40,7 @@
         android:paddingEnd="@dimen/activity_margin"
         android:paddingLeft="@dimen/image_thumb_width"
         android:paddingRight="@dimen/activity_margin"
-        android:paddingStart="@dimen/image_thumb_height"
+        android:paddingStart="@dimen/image_thumb_heightX"
         android:paddingTop="@dimen/activity_margin_half">
 
         <TextView
@@ -58,26 +58,12 @@
 
         <TextView
             android:id="@+id/text_pokemon_name_item"
-            style="@style/TextAppearance.AppCompat.Subhead"
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_margin_content"
-            android:layout_marginStart="@dimen/activity_margin_content"
-            android:layout_marginTop="@dimen/activity_margin_quarter"
-            android:maxLines="1"
+            android:layout_marginLeft="@dimen/activity_margin"
+            android:layout_marginStart="@dimen/activity_margin"
             tools:text="Raichu" />
-
-        <TextView
-            android:id="@+id/text_pokemon_types_item"
-            style="@style/TextAppearance.AppCompat.Caption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_margin_content"
-            android:layout_marginStart="@dimen/activity_margin_content"
-            android:layout_marginTop="@dimen/activity_margin_half"
-            android:ellipsize="end"
-            android:maxLines="2"
-            tools:text="Lightning, Fire" />
 
     </LinearLayout>
 

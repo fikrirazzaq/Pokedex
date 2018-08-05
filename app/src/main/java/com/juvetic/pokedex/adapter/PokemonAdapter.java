@@ -1,15 +1,25 @@
 package com.juvetic.pokedex.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.juvetic.pokedex.R;
+import com.juvetic.pokedex.api.PokemonService;
+import com.juvetic.pokedex.models.PokemonDetail;
 import com.juvetic.pokedex.models.Result;
 
 import java.util.ArrayList;
@@ -19,15 +29,20 @@ public class PokemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private static final int ITEM = 0;
     private static final int LOADING = 1;
+    private static final String BASE_URL_IMG = "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/";
 
     private List<Result> results;
+    private List<PokemonDetail> pokemonDetails;
     private Context context;
+
+    private PokemonService pokemonService;
 
     private boolean isLoadingAdded = false;
 
     public PokemonAdapter(Context context) {
         this.context = context;
         results = new ArrayList<>();
+        pokemonDetails = new ArrayList<>();
     }
 
     public List<Result> getResults() {
@@ -69,12 +84,37 @@ public class PokemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         Result result = results.get(position);
-        Log.d("HASILLL ", result.getName());
+        String pokemonImage = BASE_URL_IMG + String.format("%03d", position + 1) + ".png";
+
 
         switch (getItemViewType(position)) {
             case ITEM:
                 final PokemonVH pokemonVH = (PokemonVH) holder;
-                pokemonVH.textView.setText(result.getName());
+                pokemonVH.textPokemonName.setText(textCapWords(result.getName()));
+                pokemonVH.textPokemonId.setText(String.format("#%03d", position + 1));
+
+                /**
+                 * Using Glide to handle image loading.
+                 * Learn more about Glide here:
+                 * <a href="http://blog.grafixartist.com/image-gallery-app-android-studio-1-4-glide/" />
+                 */
+                Glide
+                        .with(context)
+                        .load(pokemonImage)
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                pokemonVH.progressBarImage.setVisibility(View.GONE);
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                pokemonVH.progressBarImage.setVisibility(View.GONE);
+                                return false;
+                            }
+                        })
+                        .into(pokemonVH.imagePokemon);
 
                 break;
             case LOADING:
@@ -151,6 +191,16 @@ public class PokemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return results.get(position);
     }
 
+    public String textCapWords(String str) {
+        String[] strArray = str.split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (String s : strArray) {
+            String cap = s.substring(0, 1).toUpperCase() + s.substring(1);
+            builder.append(cap).append(" ");
+        }
+        return builder.toString();
+    }
+
     /*
    View Holders
    _________________________________________________________________________________________________
@@ -160,11 +210,16 @@ public class PokemonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      * Main list's content ViewHolder
      */
     protected class PokemonVH extends RecyclerView.ViewHolder {
-        private TextView textView;
+        private TextView textPokemonName, textPokemonId;
+        private ProgressBar progressBarImage;
+        private ImageView imagePokemon;
 
         public PokemonVH(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.text_pokemon_name_item);
+            textPokemonName = itemView.findViewById(R.id.text_pokemon_name_item);
+            textPokemonId = itemView.findViewById(R.id.text_pokemon_id_item);
+            imagePokemon = itemView.findViewById(R.id.pokemon_image);
+            progressBarImage = itemView.findViewById(R.id.pokemon_progress);
         }
 
     }
